@@ -1,0 +1,21 @@
+{
+  "name": "meta-relayer",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Marcos Carlomagno",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "run:increase-counter": "ts-node src/examples/increase-counter.ts"
+  },
+  "dependencies": {
+    "@openzeppelin/defender-sdk": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  }
+}
