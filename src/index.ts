@@ -6,26 +6,28 @@ type RelayerKeys = {
   apiSecret: string;
 };
 
-const RELAYER_KEYS: RelayerKeys[] = [{
-  apiKey: process.env.RELAYER1_API_KEY,
-  apiSecret: process.env.RELAYER1_API_SECRET,
-}, 
-{
-  apiKey: process.env.RELAYER2_API_KEY,
-  apiSecret: process.env.RELAYER2_API_SECRET,
-},
-{
-  apiKey: process.env.RELAYER3_API_KEY,
-  apiSecret: process.env.RELAYER3_API_SECRET,
-},
-{
-  apiKey: process.env.RELAYER4_API_KEY,
-  apiSecret: process.env.RELAYER4_API_SECRET,
-}];
+const RELAYER_KEYS: RelayerKeys[] = [
+  {
+    apiKey: process.env.RELAYER1_API_KEY,
+    apiSecret: process.env.RELAYER1_API_SECRET,
+  },
+  {
+    apiKey: process.env.RELAYER2_API_KEY,
+    apiSecret: process.env.RELAYER2_API_SECRET,
+  },
+  {
+    apiKey: process.env.RELAYER3_API_KEY,
+    apiSecret: process.env.RELAYER3_API_SECRET,
+  },
+  {
+    apiKey: process.env.RELAYER4_API_KEY,
+    apiSecret: process.env.RELAYER4_API_SECRET,
+  },
+];
 
 function createRelayerClient(relayerKeys: RelayerKeys) {
   if (relayerKeys.apiKey === undefined || relayerKeys.apiSecret === undefined) {
-    throw new Error('Relayer keys not found');
+    throw new Error("Relayer keys not found");
   }
   return new Relayer({
     apiKey: relayerKeys.apiKey,

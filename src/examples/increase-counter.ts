@@ -15,14 +15,14 @@ async function main() {
     to: counterAddress,
     data: encodeCall(CounterAbi, "increase", []),
     gasLimit: baseGas * 2,
-    value: '0',
+    value: "0",
   });
 
   const singleRelayerTx = await singleRelayer.sendTransaction({
     to: counterAddress,
     data: encodeCall(CounterAbi, "increase", []),
     gasLimit: baseGas * 2,
-    value: '0',
+    value: "0",
   });
 
   console.log("MetaRelayer tx hash:", metaRelayerTx.hash);

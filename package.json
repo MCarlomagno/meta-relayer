@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node index.ts",
-    "run:increase-counter": "ts-node src/examples/increase-counter.ts"
+    "run:increase-counter": "ts-node src/examples/increase-counter.ts",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@openzeppelin/defender-sdk": "^1.6.0",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.1",
+    "prettier": "^3.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   }
