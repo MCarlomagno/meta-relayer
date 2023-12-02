@@ -7,6 +7,7 @@
   "scripts": {
     "start": "ts-node index.ts",
     "run:increase-counter": "ts-node src/examples/increase-counter.ts",
+    "run:compare": "ts-node src/metrics/compare-gas-cost.ts",
     "format": "prettier . --write"
   },
   "dependencies": {

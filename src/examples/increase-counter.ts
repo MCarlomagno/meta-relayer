@@ -26,10 +26,7 @@ async function main() {
   });
 
   console.log("MetaRelayer tx hash:", metaRelayerTx.hash);
-  // cost -> 560091000 wei
-
   console.log("SingleRelayer tx hash:", singleRelayerTx.hash);
-  // cost -> 560091 wei
 }
 
 main().catch((error) => {

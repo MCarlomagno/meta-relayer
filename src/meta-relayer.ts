@@ -27,7 +27,7 @@ export class MetaRelayer {
     } else {
       this.currentIndex++;
     }
-  }
+  };
 
   public async sendTransaction(payload: RelayerTransactionPayload) {
     const relayer = this.relayerClients[this.currentIndex];
