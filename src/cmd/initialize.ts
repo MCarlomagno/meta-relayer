@@ -15,6 +15,12 @@ export async function initialize() {
   console.log('Loading Relayer...');
   const relayer = await defender.relay.get(RELAYER_ID);
 
+  console.log('Loading approval process...');
+  const approvalProcess = await defender.deploy.getDeployApprovalProcess(relayer.network);
+  if (!approvalProcess) {
+    throw new Error('No Defender approval process found for this network');
+  }
+
   console.log('Deploying contract...');
   const deployment = await defender.deploy.deployContract({
     contractName: 'MetaRelayer',

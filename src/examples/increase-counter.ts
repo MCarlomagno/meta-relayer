@@ -4,10 +4,12 @@ import { Relayer } from "@openzeppelin/defender-sdk-relay-signer-client";
 
 const CounterAbi = require("./contracts/Counter.json");
 
+const { RELAYER_API_KEY, RELAYER_API_SECRET } = process.env;
+
 async function main() {
   const singleRelayer = new Relayer({
-    apiKey: process.env.RELAYER_API_KEY,
-    apiSecret: process.env.RELAYER_API_SECRET,
+    apiKey: RELAYER_API_KEY,
+    apiSecret: RELAYER_API_SECRET,
   });
   const metaRelayer = new MetaRelayer([singleRelayer]);
 

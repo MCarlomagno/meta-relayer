@@ -1,6 +1,8 @@
 import { Defender } from '@openzeppelin/defender-sdk';
 import * as readline from 'readline/promises';
 
+const { API_KEY, API_SECRET } = process.env;
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -10,8 +12,8 @@ const SUPPORTED_NETS = ['sepolia'];
 
 export async function create() {
   const defender = new Defender({
-    apiKey: process.env.API_KEY,
-    apiSecret: process.env.API_SECRET,
+    apiKey: API_KEY,
+    apiSecret: API_SECRET,
   });
 
   // create a new relayer

@@ -9,18 +9,20 @@ dotenv.config();
 
 const ABI = require("./cmd/contracts/abi/MetaRelayer.json");
 
+const { META_RELAYER_CONTRACT_ADDRESS } = process.env;
+
 export class MetaRelayer {
   private currentIndex: number;
   private relayerClients: Relayer[];
   public address: string;
 
   constructor(_relayerClients: Relayer[]) {
-    if (!process.env.META_RELAYER_CONTRACT_ADDRESS) {
+    if (!META_RELAYER_CONTRACT_ADDRESS) {
       throw new Error("META_RELAYER_CONTRACT_ADDRESS not found");
     }
     this.currentIndex = 0;
     this.relayerClients = _relayerClients;
-    this.address = process.env.META_RELAYER_CONTRACT_ADDRESS;
+    this.address = META_RELAYER_CONTRACT_ADDRESS;
   }
 
   private nextIndex() {
@@ -35,7 +37,7 @@ export class MetaRelayer {
     const relayer = this.relayerClients[this.currentIndex];
 
     const tx = await relayer.sendTransaction({
-      to: process.env.META_RELAYER_CONTRACT_ADDRESS,
+      to: META_RELAYER_CONTRACT_ADDRESS,
       data: MetaRelayer.buildSendCalldata(payload),
       gasPrice: "21000",
       ...payload,
@@ -51,7 +53,7 @@ export class MetaRelayer {
     const relayer = this.relayerClients[this.currentIndex];
 
     const tx = await relayer.sendTransaction({
-      to: process.env.META_RELAYER_CONTRACT_ADDRESS,
+      to: META_RELAYER_CONTRACT_ADDRESS,
       data: MetaRelayer.buildSendBatchCalldata(payloads),
       gasPrice: "21000",
       gasLimit,
