@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.20;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
@@ -12,14 +12,14 @@ contract MetaRelayer is AccessControl {
 
     uint relayersLength = relayers.length;
 
-    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
 
     for (uint i = 0; i < relayersLength; i++) {
       // fund relayers
       (bool success,) = relayers[i].call{value: msg.value / relayersLength}("");
 
       // allow relayers only
-      _setupRole(RELAYER, relayers[i]);
+      _grantRole(RELAYER, relayers[i]);
     }
   }
 

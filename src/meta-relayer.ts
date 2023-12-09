@@ -7,7 +7,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const ABI = require("./contract/abi/MetaRelayer.json");
+const ABI = require("./cmd/contracts/abi/MetaRelayer.json");
 
 export class MetaRelayer {
   private currentIndex: number;

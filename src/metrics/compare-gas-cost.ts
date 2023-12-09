@@ -22,7 +22,7 @@ async function main() {
     to: counterAddress,
     value: "0x0",
     data: MetaRelayer.encodeCall(CounterAbi, "increase", []),
-    gasLimit: 42000,
+    gasLimit: 1e9, // a very high limit should be used to avoid out-of-gas errors
   };
 
   const resultSingle = await provider.estimateGas(tx);

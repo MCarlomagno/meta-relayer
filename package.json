@@ -5,7 +5,8 @@
   "author": "Marcos Carlomagno",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node index.ts",
+    "create": "ts-node index.ts create",
+    "intialize": "ts-node index.ts intialize",
     "run:increase-counter": "ts-node src/examples/increase-counter.ts",
     "run:compare": "ts-node src/metrics/compare-gas-cost.ts",
     "format": "prettier . --write"

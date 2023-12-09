@@ -1,4 +1,5 @@
 import { create } from "./src/cmd/create";
+import { initialize } from "./src/cmd/initialize";
 
 async function main() {
   const command = process.argv[2];
@@ -6,6 +7,9 @@ async function main() {
   switch (command) {
     case "create":
       await create();
+      break;
+    case "initialize":
+      await initialize();
       break;
     default:
       console.log("Command not found.");
