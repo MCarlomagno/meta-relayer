@@ -2,10 +2,12 @@ import {
   Relayer,
   RelayerTransactionPayload,
 } from "@openzeppelin/defender-sdk-relay-signer-client";
-import { buildSendBatchCalldata, buildSendCalldata } from "./utils";
+import { Interface } from "ethers";
 import * as dotenv from "dotenv";
 
 dotenv.config();
+
+const ABI = require("./contract/abi/MetaRelayer.json");
 
 export class MetaRelayer {
   private currentIndex: number;
@@ -34,7 +36,7 @@ export class MetaRelayer {
 
     const tx = await relayer.sendTransaction({
       to: process.env.META_RELAYER_CONTRACT_ADDRESS,
-      data: buildSendCalldata(payload),
+      data: MetaRelayer.buildSendCalldata(payload),
       gasPrice: "21000",
       ...payload,
     });
@@ -50,11 +52,42 @@ export class MetaRelayer {
 
     const tx = await relayer.sendTransaction({
       to: process.env.META_RELAYER_CONTRACT_ADDRESS,
-      data: buildSendBatchCalldata(payloads),
+      data: MetaRelayer.buildSendBatchCalldata(payloads),
       gasPrice: "21000",
       gasLimit,
     });
     this.nextIndex();
     return tx;
+  }
+
+  static encodeCall(abi: string, input: string, args: any[]) {
+    const iface = new Interface(abi);
+    const encodedCall = iface.encodeFunctionData(input, args);
+    return encodedCall;
+  }
+
+  static buildSendBatchCalldata(payloads: RelayerTransactionPayload[]) {
+    const { toArray, dataArray, valueArray } = payloads.reduce(
+      (acc, curr) => {
+        acc.toArray.push(curr.to);
+        acc.dataArray.push(curr.data);
+        acc.valueArray.push(curr.value);
+        return acc;
+      },
+      { toArray: [], dataArray: [], valueArray: [] },
+    );
+  
+    const encodedCall = this.encodeCall(ABI, "sendBatch", [
+      toArray,
+      dataArray,
+      valueArray,
+    ]);
+    return encodedCall;
+  }
+  
+  static buildSendCalldata(payload: RelayerTransactionPayload) {
+    const { to, data } = payload;
+    const encodedCall = this.encodeCall(ABI, "send", [to, data]);
+    return encodedCall;
   }
 }

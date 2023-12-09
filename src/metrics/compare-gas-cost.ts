@@ -1,11 +1,14 @@
-import { getMetarelayerClient, getSingleRelayerClient } from "..";
-import { buildSendBatchCalldata, buildSendCalldata, encodeCall } from "../utils";
+import { MetaRelayer } from "../meta-relayer";
+import { Relayer } from "@openzeppelin/defender-sdk-relay-signer-client";
 
 const CounterAbi = require("../examples/contracts/Counter.json");
 
 async function main() {
-  const metaRelayer = getMetarelayerClient();
-  const singleRelayer = getSingleRelayerClient();
+  const singleRelayer = new Relayer({
+    apiKey: process.env.RELAYER_API_KEY,
+    apiSecret: process.env.RELAYER_API_SECRET,
+  });
+  const metaRelayer = new MetaRelayer([singleRelayer]);
 
   // goerli counter address
   const counterAddress = "0x87C42a966E52184F03d569729A51F5d0142A603F";
@@ -18,7 +21,7 @@ async function main() {
     from: relayer.address,
     to: counterAddress,
     value: "0x0",
-    data: encodeCall(CounterAbi, "increase", []),
+    data: MetaRelayer.encodeCall(CounterAbi, "increase", []),
     gasLimit: 42000,
   };
 
@@ -26,7 +29,7 @@ async function main() {
   const resultMeta = await provider.estimateGas({
     ...tx,
     to: metaRelayer.address,
-    data: buildSendCalldata(tx)
+    data: MetaRelayer.buildSendCalldata(tx)
   });
 
   console.log('================================');
@@ -36,7 +39,7 @@ async function main() {
   console.log('================================');
 
   const batch5 = Array(5).fill(tx);
-  const metaTx = buildSendBatchCalldata(batch5);
+  const metaTx = MetaRelayer.buildSendBatchCalldata(batch5);
   const resultBatch = await provider.estimateGas({
     ...tx,
     gasLimit: tx.gasLimit * batch5.length,
@@ -51,7 +54,7 @@ async function main() {
   console.log('================================');
 
   const batch10 = Array(10).fill(tx);
-  const metaTx10 = buildSendBatchCalldata(batch10);
+  const metaTx10 = MetaRelayer.buildSendBatchCalldata(batch10);
   const resultBatch10 = await provider.estimateGas({
     ...tx,
     gasLimit: tx.gasLimit * batch10.length,

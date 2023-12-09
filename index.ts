@@ -1,15 +1,11 @@
-import { createRelayers } from "./src/cmd/create-relayers";
-import { deployContract } from "./src/cmd/deploy-contract";
+import { create } from "./src/cmd/create";
 
 async function main() {
   const command = process.argv[2];
 
   switch (command) {
-    case "create-relayers":
-      await createRelayers();
-      break;
-    case "deploy-contract":
-      await deployContract();
+    case "create":
+      await create();
       break;
     default:
       console.log("Command not found.");
