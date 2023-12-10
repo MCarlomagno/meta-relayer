@@ -1,5 +1,5 @@
-import { create } from "./src/cmd/create";
-import { initialize } from "./src/cmd/initialize";
+import { create } from "./cmd/create";
+import { initialize } from "./cmd/initialize";
 
 async function main() {
   const command = process.argv[2];
@@ -8,7 +8,7 @@ async function main() {
     case "create":
       await create();
       break;
-    case "initialize":
+    case "init":
       await initialize();
       break;
     default:

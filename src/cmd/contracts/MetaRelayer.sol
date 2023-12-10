@@ -7,20 +7,15 @@ contract MetaRelayer is AccessControl {
   bytes32 public constant RELAYER = keccak256("RELAYER");
   uint _baseFunds;
 
-  constructor(address[] memory relayers, uint baseFunds) payable {
+  constructor(address relayer, uint baseFunds) payable {
     _baseFunds = baseFunds;
 
-    uint relayersLength = relayers.length;
-
     _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    
+    (bool success,) = relayer.call{value: msg.value}("");
 
-    for (uint i = 0; i < relayersLength; i++) {
-      // fund relayers
-      (bool success,) = relayers[i].call{value: msg.value / relayersLength}("");
-
-      // allow relayers only
-      _grantRole(RELAYER, relayers[i]);
-    }
+    // allow relayer only
+    _grantRole(RELAYER, relayer);
   }
 
   function send(address target, bytes calldata data) external payable onlyRole(RELAYER) returns(bool) {
